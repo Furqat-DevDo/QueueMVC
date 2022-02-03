@@ -1,0 +1,19 @@
+@model QueueModel
+<form class="form-signin" method="post" asp-action="TakeQueue" asp-controller="Home">
+
+    <div class="form-label-group">
+        <input asp-for="CustomerName" type="text" id="CustomerName" class="form-control" placeholder="" required="">
+        <label class="text-muted" asp-for="CustomerName" for="CustomerName"></label>
+        <span asp-validation-for="CustomerName" class="text-danger"></span>
+    </div>
+
+    <div class="form-label-group">
+        <input asp-for="Phone" type="tel" id="Phone" class="form-control" placeholder="" required="">
+        <label class="text-muted" asp-for="Phone" for="Phone"></label>
+        <span asp-validation-for="Phone" class="text-danger"></span>
+    </div>
+    
+    <div class="row mx-auto">
+        <button class="btn btn-lg btn-success" type="submit">Navbat olish</button>
+    </div>
+</form>
