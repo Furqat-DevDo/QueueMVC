@@ -4,21 +4,24 @@ namespace Queue.Service;
 
 public class QueueService : BackgroundService
 {
-    private readonly ILogger _logger;
+    private readonly ILogger<QueueService> _logger;
     private readonly AppDbContext _dbcontext;
 
-    public QueueService(ILogger logger, AppDbContext dbContext)
+    public QueueService(ILogger<QueueService> logger, AppDbContext dbContext)
     {
-        _logger=logger;
-        _dbcontext=dbContext;
+        _logger = logger;
+        _dbcontext = dbContext;
     }
 
     protected async override Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while(true)
+        while (true)
         {
-            var queues = await _dbcontext.Queues.Where(q => q.ExpirationTime < DateTimeOffset.UtcNow).ToListAsync();
-            queues.ForEach(q => q.IsActive = false);
+            var queues = _dbcontext.Queues.Where(q => q.ExpirationTime < DateTimeOffset.UtcNow).ToList();
+            foreach(var obj in queues)
+            {
+               obj.IsActive = false;
+            }
             _dbcontext.UpdateRange(queues);
             await _dbcontext.SaveChangesAsync();
         }

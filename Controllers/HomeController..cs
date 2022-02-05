@@ -13,7 +13,7 @@ public partial class HomeController : Controller
     {
  
         
-        var lastuser=_dbcontext.Queues.OrderBy(p => p.CreatedAt).LastOrDefault();
+        var lastuser=_dbcontext.Queues.Where(o=>o.IsActive==true).OrderBy(p => p.CreatedAt).LastOrDefault();
         
         var user=new QueueModel();
         user.ID=model.ID;

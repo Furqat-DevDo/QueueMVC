@@ -15,8 +15,8 @@ builder.Services.AddIdentity<UserModel, IdentityRole>(options =>
     options.Password.RequireUppercase = false;
     options.Password.RequireLowercase = false;
     options.User.RequireUniqueEmail = true;
-    }).AddEntityFrameworkStores<AppDbContext>();
-    
+}).AddEntityFrameworkStores<AppDbContext>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.ConfigureApplicationCookie(options =>
 {
@@ -24,10 +24,10 @@ builder.Services.ConfigureApplicationCookie(options =>
     options.LoginPath = "/Home/Login";
 });
 builder.Services.AddControllersWithViews();
+builder.Services.AddTransient<QueueService>();
 builder.Services.AddHostedService<SeedService>();
-// builder.Services.AddTransient<QueueService>();
-var app = builder.Build();
 
+var app = builder.Build();
 
 if (!app.Environment.IsDevelopment())
 {
